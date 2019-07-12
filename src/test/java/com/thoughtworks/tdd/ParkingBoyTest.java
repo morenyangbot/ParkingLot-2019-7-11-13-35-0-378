@@ -1,9 +1,26 @@
 package com.thoughtworks.tdd;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class ParkingBoyTest {
+
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalErr = System.err;
+
+    @BeforeEach
+    public void setUpStreams() {
+        System.setErr(new PrintStream(errContent));
+    }
+
+    @AfterEach
+    public void restoreStreams() {
+        System.setErr(originalErr);
+    }
+
+
     @Test
     void should_get_the_car_in_fetch_when_call_the_ticket_and_return_the_car_parked() {
         Car car = new Car();
@@ -46,6 +63,7 @@ public class ParkingBoyTest {
         Car fetchedCar = parkingBoy.fetch(wrongTicket);
 
         Assertions.assertNull(fetchedCar);
+        Assertions.assertEquals("Unrecognized parking ticket.\n", errContent.toString());
     }
 
     @Test
@@ -72,6 +90,7 @@ public class ParkingBoyTest {
         parkingBoy.fetch(ticket);
         Car fetchedCarSecondTime = parkingBoy.fetch(ticket);
         Assertions.assertNull(fetchedCarSecondTime);
+        Assertions.assertEquals("Unrecognized parking ticket.\n", errContent.toString());
     }
 
     @Test

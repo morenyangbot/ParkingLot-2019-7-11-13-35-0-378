@@ -28,6 +28,10 @@ public class ParkingLot {
     }
 
     public Car fetch(Ticket ticket) {
-        return ticketCarMap.remove(ticket);
+        Car car = ticketCarMap.remove(ticket);
+        if (car == null) {
+            System.err.println("Unrecognized parking ticket.");
+        }
+        return car;
     }
 }

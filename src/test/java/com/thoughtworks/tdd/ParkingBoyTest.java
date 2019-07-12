@@ -104,6 +104,7 @@ public class ParkingBoyTest {
 
         Ticket overflowCarTicket = parkingBoy.park(new Car());
         Assertions.assertNull(overflowCarTicket);
+        Assertions.assertEquals("Not enough position.\n", errContent.toString());
     }
 
     @Test

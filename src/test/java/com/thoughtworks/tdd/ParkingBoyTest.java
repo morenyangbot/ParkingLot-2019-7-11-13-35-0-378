@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class ParkingBoyTest {
     @Test
-    void should_get_the_car_in_fetchCar_when_call_the_ticket_and_return_the_car_parked() {
+    void should_get_the_car_in_fetch_when_call_the_ticket_and_return_the_car_parked() {
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
@@ -32,5 +32,32 @@ public class ParkingBoyTest {
 
         Assertions.assertEquals(car, fetchedCar);
         Assertions.assertEquals(anotherCar, anotherFetchedCar);
+    }
+
+    @Test
+    void should_not_fetch_car_when_give_a_wrong_ticket() {
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        parkingBoy.park(car);
+
+        Ticket wrongTicket = new Ticket();
+        Car fetchedCar = parkingBoy.fetch(wrongTicket);
+
+        Assertions.assertNull(fetchedCar);
+    }
+
+    @Test
+    void should_not_fetch_car_when_give_no_ticket() {
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        parkingBoy.park(car);
+
+        Car fetchedCar = parkingBoy.fetch(null);
+
+        Assertions.assertNull(fetchedCar);
     }
 }

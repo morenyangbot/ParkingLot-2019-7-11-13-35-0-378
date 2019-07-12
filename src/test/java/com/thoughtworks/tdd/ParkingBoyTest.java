@@ -85,4 +85,16 @@ public class ParkingBoyTest {
         Ticket overflowCarTicket = parkingBoy.park(new Car());
         Assertions.assertNull(overflowCarTicket);
     }
+
+    @Test
+    void should_not_allow_park_a_parked_car() {
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        parkingBoy.park(car);
+        Ticket ticket = parkingBoy.park(car);
+
+        Assertions.assertNull(ticket);
+    }
 }

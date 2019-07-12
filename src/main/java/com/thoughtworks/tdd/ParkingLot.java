@@ -28,6 +28,10 @@ public class ParkingLot {
     }
 
     public Car fetch(Ticket ticket) {
+        if (ticket == null) {
+            System.err.println("Please provide your parking ticket.");
+            return null;
+        }
         Car car = ticketCarMap.remove(ticket);
         if (car == null) {
             System.err.println("Unrecognized parking ticket.");

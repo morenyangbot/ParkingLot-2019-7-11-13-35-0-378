@@ -77,6 +77,7 @@ public class ParkingBoyTest {
         Car fetchedCar = parkingBoy.fetch(null);
 
         Assertions.assertNull(fetchedCar);
+        Assertions.assertEquals("Please provide your parking ticket.\n", errContent.toString());
     }
 
     @Test

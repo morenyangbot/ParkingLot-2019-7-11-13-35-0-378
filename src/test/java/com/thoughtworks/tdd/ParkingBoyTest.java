@@ -73,4 +73,16 @@ public class ParkingBoyTest {
         Car fetchedCarSecondTime = parkingBoy.fetch(ticket);
         Assertions.assertNull(fetchedCarSecondTime);
     }
+
+    @Test
+    void should_not_park_car_when_parking_lot_full() {
+        ParkingLot parkingLot = new ParkingLot(2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+
+        Ticket overflowCarTicket = parkingBoy.park(new Car());
+        Assertions.assertNull(overflowCarTicket);
+    }
 }

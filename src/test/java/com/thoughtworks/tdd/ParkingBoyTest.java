@@ -97,4 +97,14 @@ public class ParkingBoyTest {
 
         Assertions.assertNull(ticket);
     }
+
+    @Test
+    void should_not_allow_park_null() {
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        Ticket ticket = parkingBoy.park(null);
+
+        Assertions.assertNull(ticket);
+    }
 }

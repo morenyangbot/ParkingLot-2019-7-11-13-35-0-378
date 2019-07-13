@@ -1,7 +1,9 @@
 package com.thoughtworks.tdd;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ParkingBoy {
     protected List<ParkingLot> parkingLots;
@@ -63,5 +65,17 @@ public class ParkingBoy {
             return;
         }
         parkingLots.add(parkingLot);
+    }
+
+    public boolean isParkingLotsFull() {
+        if (parkingLots.size() == 0) {
+            return true;
+        }
+        return parkingLots.stream().sorted(new Comparator<ParkingLot>() {
+            @Override
+            public int compare(ParkingLot o1, ParkingLot o2) {
+                return o1.getRemainder() - o2.getRemainder();
+            }
+        }).collect(Collectors.toList()).get(0).isFull();
     }
 }

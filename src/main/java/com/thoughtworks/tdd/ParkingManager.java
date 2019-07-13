@@ -23,6 +23,10 @@ public class ParkingManager {
             System.err.println("Can not manage a empty parking boy.");
             return;
         }
+        if (parkingBoys.contains(parkingBoy)) {
+            System.err.println("This manager has already managed the parking boy.");
+            return;
+        }
         parkingBoys.add(parkingBoy);
     }
 

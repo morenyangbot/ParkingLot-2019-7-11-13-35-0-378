@@ -23,4 +23,18 @@ public class ParkingManagerTest {
 
         Assertions.assertEquals(car, fetchedCar);
     }
+
+    @Test
+    void should_manage_parking_lot_by_parking_manager() {
+        ParkingManager parkingManager = new ParkingManager();
+        parkingManager.addParkingLot(new ParkingLot());
+
+        Car car = new Car();
+
+        Ticket ticket = parkingManager.park(car);
+
+        Car fetchedCar = parkingManager.fetch(ticket);
+
+        Assertions.assertEquals(car, fetchedCar);
+    }
 }

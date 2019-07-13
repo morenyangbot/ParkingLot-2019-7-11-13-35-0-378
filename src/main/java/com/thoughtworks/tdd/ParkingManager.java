@@ -9,9 +9,12 @@ import java.util.stream.Collectors;
 public class ParkingManager {
     private List<ParkingBoy> parkingBoys;
     private Map<Ticket, ParkingBoy> ticketParkingBoyMap;
+    private ParkingBoy selfParkingBoy;
 
     public ParkingManager() {
         parkingBoys = new ArrayList<>();
+        this.selfParkingBoy = new ParkingBoy();
+        parkingBoys.add(this.selfParkingBoy);
         ticketParkingBoyMap = new HashMap<>();
     }
 
@@ -49,5 +52,9 @@ public class ParkingManager {
             return null;
         }
         return parkingBoy.fetch(ticket);
+    }
+
+    public void addParkingLot(ParkingLot parkingLot) {
+        this.selfParkingBoy.addParkingLot(parkingLot);
     }
 }

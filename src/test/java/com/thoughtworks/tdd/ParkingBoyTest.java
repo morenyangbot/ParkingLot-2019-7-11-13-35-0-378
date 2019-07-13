@@ -128,4 +128,20 @@ public class ParkingBoyTest {
 
         Assertions.assertNull(ticket);
     }
+
+    @Test
+    void should_manage_multiple_parking_lots_sequentially() {
+        ParkingLot parkingLot = new ParkingLot(2);
+        ParkingLot parkingLot1 = new ParkingLot(2);
+        ParkingBoy parkingBoy = new ParkingBoy();
+
+        parkingBoy.addParkingLot(parkingLot);
+        parkingBoy.addParkingLot(parkingLot1);
+
+        parkingBoy.park(new Car());
+        parkingBoy.park(new Car());
+
+        Assertions.assertTrue(parkingLot.isFull());
+        Assertions.assertTrue(parkingLot1.isEmpty());
+    }
 }

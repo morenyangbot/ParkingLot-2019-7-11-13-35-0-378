@@ -41,4 +41,20 @@ public class ParkingLot {
         }
         return car;
     }
+
+    public boolean isFull() {
+        return ticketCarMap.size() >= capacity;
+    }
+
+    public boolean isEmpty() {
+        return ticketCarMap.size() == 0;
+    }
+
+    public boolean containsTicket(Ticket ticket) {
+        return ticketCarMap.containsKey(ticket);
+    }
+
+    public boolean containsCar(Car car) {
+        return ticketCarMap.containsValue(car);
+    }
 }

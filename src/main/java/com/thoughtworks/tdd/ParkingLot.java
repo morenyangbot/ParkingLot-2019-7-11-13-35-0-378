@@ -44,4 +44,8 @@ public class ParkingLot {
     public boolean containsCar(Car car) {
         return ticketCarMap.containsValue(car);
     }
+
+    public int getRemainder() {
+        return ticketCarMap.size() - capacity;
+    }
 }

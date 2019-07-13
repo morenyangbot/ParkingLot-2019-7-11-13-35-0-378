@@ -16,10 +16,18 @@ public class ParkingBoy {
     }
 
     public ParkingBoy(List<ParkingLot> parkingLots) {
-        this.parkingLots = parkingLots;
+        if (parkingLots == null) {
+            System.err.println("Can not add a empty parking lot list.");
+            return;
+        }
+        parkingLots.forEach(this::addParkingLot);
     }
 
     public Ticket park(Car car) {
+        if (parkingLots == null) {
+            System.err.println("Parking boy has no parking lot.");
+            return null;
+        }
         if (car == null) {
             return null;
         }
@@ -50,6 +58,10 @@ public class ParkingBoy {
     }
 
     public void addParkingLot(ParkingLot parkingLot) {
+        if (parkingLot == null) {
+            System.err.println("Can not add a empty parking lot.");
+            return;
+        }
         parkingLots.add(parkingLot);
     }
 }

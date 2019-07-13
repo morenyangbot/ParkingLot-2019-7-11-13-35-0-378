@@ -17,12 +17,7 @@ public class ParkingLot {
     }
 
     public Ticket park(Car car) {
-        if (ticketCarMap.size() >= capacity) {
-            System.err.println("Not enough position.");
-            return null;
-        }
-        if (ticketCarMap.containsValue(car)
-                || car == null) {
+        if (isFull() || containsCar(car) || car == null) {
             return null;
         }
         Ticket ticket = new Ticket();
@@ -31,15 +26,7 @@ public class ParkingLot {
     }
 
     public Car fetch(Ticket ticket) {
-        if (ticket == null) {
-            System.err.println("Please provide your parking ticket.");
-            return null;
-        }
-        Car car = ticketCarMap.remove(ticket);
-        if (car == null) {
-            System.err.println("Unrecognized parking ticket.");
-        }
-        return car;
+        return ticketCarMap.remove(ticket);
     }
 
     public boolean isFull() {

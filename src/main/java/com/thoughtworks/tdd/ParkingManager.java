@@ -46,16 +46,22 @@ public class ParkingManager {
     }
 
     public Car fetch(Ticket ticket) {
+        if (checkTicket(ticket)) {
+            return ticketParkingBoyMap.get(ticket).fetch(ticket);
+        }
+        return null;
+    }
+
+    private boolean checkTicket(Ticket ticket) {
         if (ticket == null) {
             System.err.print("Please provide your parking ticket.\n");
-            return null;
+            return false;
         }
-        ParkingBoy parkingBoy = ticketParkingBoyMap.get(ticket);
-        if (parkingBoy == null) {
+        if (!ticketParkingBoyMap.containsKey(ticket)) {
             System.err.print("Unrecognized parking ticket.\n");
-            return null;
+            return false;
         }
-        return parkingBoy.fetch(ticket);
+        return true;
     }
 
     public void addParkingLot(ParkingLot parkingLot) {

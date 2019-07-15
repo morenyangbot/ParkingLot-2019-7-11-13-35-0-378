@@ -31,18 +31,26 @@ public class ParkingManager {
     }
 
     public Ticket park(Car car) {
+        if (isParkable(car)) {
+            ParkingBoy targetParkingBoy = parkingBoys.stream()
+                    .filter(parkingBoy -> !parkingBoy.isParkingLotsFull()).collect(Collectors.toList())
+                    .get(0);
+            Ticket ticket = targetParkingBoy.park(car);
+            ticketParkingBoyMap.put(ticket, targetParkingBoy);
+            return ticket;
+        }
+        return null;
+    }
+
+    private boolean isParkable(Car car) {
         if (car == null) {
-            return null;
+            return false;
         }
-        List<ParkingBoy> targetParkingBoyList = parkingBoys.stream().filter(parkingBoy -> !parkingBoy.isParkingLotsFull()).collect(Collectors.toList());
-        if (targetParkingBoyList.size() == 0) {
+        if (parkingBoys.size() == 0 || parkingBoys.stream().allMatch(ParkingBoy::isParkingLotsFull)) {
             System.err.print("Not enough position.\n");
-            return null;
+            return false;
         }
-        ParkingBoy targetParkingBoy = targetParkingBoyList.get(0);
-        Ticket ticket = targetParkingBoy.park(car);
-        ticketParkingBoyMap.put(ticket, targetParkingBoy);
-        return ticket;
+        return true;
     }
 
     public Car fetch(Ticket ticket) {

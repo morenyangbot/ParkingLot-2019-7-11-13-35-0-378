@@ -1,9 +1,7 @@
 package com.thoughtworks.tdd;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ParkingBoy {
@@ -27,22 +25,14 @@ public class ParkingBoy {
     }
 
     public Ticket park(Car car) {
-        if (!isParkable(car)) {
-            return null;
-        }
-        for (ParkingLot parkingLot : parkingLots) {
-            if (!parkingLot.isFull()) {
-                return parkingLot.park(car);
-            }
+        if (isParkable(car)) {
+            return parkingLots.stream().filter(parkingLot -> !parkingLot.isFull()).collect(Collectors.toList()).get(0)
+                    .park(car);
         }
         return null;
     }
 
     protected boolean isParkable(Car car) {
-        if (parkingLots == null) {
-            System.err.print("Parking boy has no parking lot.\n");
-            return false;
-        }
         if (car == null || containsCar(car)) {
             return false;
         }
@@ -79,12 +69,7 @@ public class ParkingBoy {
         if (parkingLots.size() == 0) {
             return true;
         }
-        return parkingLots.stream().sorted(new Comparator<ParkingLot>() {
-            @Override
-            public int compare(ParkingLot o1, ParkingLot o2) {
-                return o1.getRemainder() - o2.getRemainder();
-            }
-        }).collect(Collectors.toList()).get(0).isFull();
+        return parkingLots.stream().allMatch(ParkingLot::isFull);
     }
 
     protected boolean containsCar(Car car) {

@@ -3,6 +3,7 @@ package com.thoughtworks.tdd;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ParkingBoy {
@@ -26,11 +27,7 @@ public class ParkingBoy {
     }
 
     public Ticket park(Car car) {
-        if (parkingLots == null) {
-            System.err.print("Parking boy has no parking lot.\n");
-            return null;
-        }
-        if (car == null || containsCar(car)) {
+        if (!isParkable(car)) {
             return null;
         }
         for (ParkingLot parkingLot : parkingLots) {
@@ -38,8 +35,22 @@ public class ParkingBoy {
                 return parkingLot.park(car);
             }
         }
-        System.err.print("Not enough position.\n");
         return null;
+    }
+
+    protected boolean isParkable(Car car) {
+        if (parkingLots == null) {
+            System.err.print("Parking boy has no parking lot.\n");
+            return false;
+        }
+        if (car == null || containsCar(car)) {
+            return false;
+        }
+        if (isParkingLotsFull()) {
+            System.err.print("Not enough position.\n");
+            return false;
+        }
+        return true;
     }
 
     public Car fetch(Ticket ticket) {

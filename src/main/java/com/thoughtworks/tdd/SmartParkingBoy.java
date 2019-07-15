@@ -20,7 +20,7 @@ public class SmartParkingBoy extends ParkingBoy {
 
     @Override
     public Ticket park(Car car) {
-        if (car == null || containsCar(car)) {
+        if (!isParkable(car)) {
             return null;
         }
 
@@ -30,11 +30,6 @@ public class SmartParkingBoy extends ParkingBoy {
                 return o1.getRemainder() - o2.getRemainder();
             }
         }).collect(Collectors.toList()).get(0);
-
-        if (targetParkingLot.isFull()) {
-            System.err.print("Not enough position.\n");
-            return null;
-        }
 
         return targetParkingLot.park(car);
 

@@ -44,17 +44,34 @@ public class ParkingBoy {
     }
 
     public Car fetch(Ticket ticket) {
-        if (ticket == null) {
-            System.err.print("Please provide your parking ticket.\n");
-            return null;
-        }
-        for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.containsTicket(ticket)) {
-                return parkingLot.fetch(ticket);
+        if (checkTicket(ticket)) {
+            ParkingLot targetParkingLot = getParkingLotByTicket(ticket);
+            if (targetParkingLot != null) {
+                return targetParkingLot.fetch(ticket);
             }
         }
-        System.err.print("Unrecognized parking ticket.\n");
         return null;
+    }
+
+    private ParkingLot getParkingLotByTicket(Ticket ticket) {
+        for (ParkingLot parkingLot : parkingLots) {
+            if (parkingLot.containsTicket(ticket)) {
+                return parkingLot;
+            }
+        }
+        return null;
+    }
+
+    private boolean checkTicket(Ticket ticket) {
+        if (ticket == null) {
+            System.err.print("Please provide your parking ticket.\n");
+            return false;
+        }
+        if (getParkingLotByTicket(ticket) == null) {
+            System.err.print("Unrecognized parking ticket.\n");
+            return false;
+        }
+        return true;
     }
 
     public void addParkingLot(ParkingLot parkingLot) {

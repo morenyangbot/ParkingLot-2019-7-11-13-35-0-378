@@ -17,7 +17,6 @@ public class SuperSmartParkingBoy extends ParkingBoy {
         super(parkingLots);
     }
 
-
     @Override
     public Ticket park(Car car) {
         if (!isParkable(car)) {

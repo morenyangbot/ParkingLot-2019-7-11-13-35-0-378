@@ -20,11 +20,11 @@ public class ParkingManager {
 
     public void manage(ParkingBoy parkingBoy) {
         if (parkingBoy == null) {
-            System.err.println("Can not manage a empty parking boy.");
+            System.err.print("Can not manage a empty parking boy.\n");
             return;
         }
         if (parkingBoys.contains(parkingBoy)) {
-            System.err.println("This manager has already managed the parking boy.");
+            System.err.print("This manager has already managed the parking boy.\n");
             return;
         }
         parkingBoys.add(parkingBoy);
@@ -36,7 +36,7 @@ public class ParkingManager {
         }
         List<ParkingBoy> targetParkingBoyList = parkingBoys.stream().filter(parkingBoy -> !parkingBoy.isParkingLotsFull()).collect(Collectors.toList());
         if (targetParkingBoyList.size() == 0) {
-            System.err.println("Not enough position.");
+            System.err.print("Not enough position.\n");
             return null;
         }
         ParkingBoy targetParkingBoy = targetParkingBoyList.get(0);
@@ -47,12 +47,12 @@ public class ParkingManager {
 
     public Car fetch(Ticket ticket) {
         if (ticket == null) {
-            System.err.println("Please provide your parking ticket.");
+            System.err.print("Please provide your parking ticket.\n");
             return null;
         }
         ParkingBoy parkingBoy = ticketParkingBoyMap.get(ticket);
         if (parkingBoy == null) {
-            System.err.println("Unrecognized parking ticket.");
+            System.err.print("Unrecognized parking ticket.\n");
             return null;
         }
         return parkingBoy.fetch(ticket);

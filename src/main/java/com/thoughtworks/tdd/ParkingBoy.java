@@ -19,7 +19,7 @@ public class ParkingBoy {
 
     public ParkingBoy(List<ParkingLot> parkingLots) {
         if (parkingLots == null) {
-            System.err.println("Can not add a empty parking lot list.");
+            System.err.print("Can not add a empty parking lot list.\n");
             return;
         }
         parkingLots.forEach(this::addParkingLot);
@@ -27,27 +27,24 @@ public class ParkingBoy {
 
     public Ticket park(Car car) {
         if (parkingLots == null) {
-            System.err.println("Parking boy has no parking lot.");
+            System.err.print("Parking boy has no parking lot.\n");
             return null;
         }
-        if (car == null) {
+        if (car == null || containsCar(car)) {
             return null;
         }
         for (ParkingLot parkingLot : parkingLots) {
-            if (parkingLot.containsCar(car)) {
-                return null;
-            }
             if (!parkingLot.isFull()) {
                 return parkingLot.park(car);
             }
         }
-        System.err.println("Not enough position.");
+        System.err.print("Not enough position.\n");
         return null;
     }
 
     public Car fetch(Ticket ticket) {
         if (ticket == null) {
-            System.err.println("Please provide your parking ticket.");
+            System.err.print("Please provide your parking ticket.\n");
             return null;
         }
         for (ParkingLot parkingLot : parkingLots) {
@@ -55,13 +52,13 @@ public class ParkingBoy {
                 return parkingLot.fetch(ticket);
             }
         }
-        System.err.println("Unrecognized parking ticket.");
+        System.err.print("Unrecognized parking ticket.\n");
         return null;
     }
 
     public void addParkingLot(ParkingLot parkingLot) {
         if (parkingLot == null) {
-            System.err.println("Can not add a empty parking lot.");
+            System.err.print("Can not add a empty parking lot.\n");
             return;
         }
         parkingLots.add(parkingLot);
@@ -77,5 +74,10 @@ public class ParkingBoy {
                 return o1.getRemainder() - o2.getRemainder();
             }
         }).collect(Collectors.toList()).get(0).isFull();
+    }
+
+    protected boolean containsCar(Car car) {
+        List<ParkingLot> targetList = parkingLots.stream().filter(parkingLot -> parkingLot.containsCar(car)).collect(Collectors.toList());
+        return targetList.size() > 0;
     }
 }

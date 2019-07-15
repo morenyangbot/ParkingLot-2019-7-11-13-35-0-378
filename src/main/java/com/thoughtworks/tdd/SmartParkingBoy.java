@@ -20,13 +20,8 @@ public class SmartParkingBoy extends ParkingBoy {
 
     @Override
     public Ticket park(Car car) {
-        if (car == null) {
+        if (car == null || containsCar(car)) {
             return null;
-        }
-        for (ParkingLot parkingLot : this.parkingLots) {
-            if (parkingLot.containsCar(car)) {
-                return null;
-            }
         }
 
         ParkingLot targetParkingLot = parkingLots.stream().sorted(new Comparator<ParkingLot>() {
@@ -37,7 +32,7 @@ public class SmartParkingBoy extends ParkingBoy {
         }).collect(Collectors.toList()).get(0);
 
         if (targetParkingLot.isFull()) {
-            System.err.println("Not enough position.");
+            System.err.print("Not enough position.\n");
             return null;
         }
 
